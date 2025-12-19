@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>AtomFall — Correct-Only Mode</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <div class="wrap">
+    <aside class="panel">
+      <div class="brand">
+        <div>
+          <h1>AtomFall</h1>
+          <div style="color:var(--muted);font-size:12px;margin-top:4px">
+            Correct-only mode: wrong ones can fall freely.
+          </div>
+        </div>
+        <span class="pill" id="difficultyPill">Level 1</span>
+      </div>
+
+      <div class="atomCard">
+        <div class="atomTitle">
+          <div>
+            <div style="color:var(--muted);font-size:12px;font-weight:800">TARGET ELEMENT</div>
+            <div class="targetName" id="targetName">Oxygen</div>
+          </div>
+          <div class="targetMeta" id="targetMeta">Z=8 • A≈16.00</div>
+        </div>
+
+        <div class="atomViz">
+          <svg class="atomSvg" viewBox="0 0 300 210">
+            <defs>
+              <radialGradient id="nucGrad" cx="45%" cy="35%">
+                <stop offset="0%" stop-color="rgba(34,197,94,0.95)"/>
+                <stop offset="65%" stop-color="rgba(124,58,237,0.85)"/>
+                <stop offset="100%" stop-color="rgba(0,0,0,0.2)"/>
+              </radialGradient>
+              <linearGradient id="orbGrad" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%" stop-color="rgba(124,58,237,0.75)"/>
+                <stop offset="100%" stop-color="rgba(34,197,94,0.75)"/>
+              </linearGradient>
+            </defs>
+
+            <ellipse cx="150" cy="105" rx="105" ry="55" fill="none" stroke="url(#orbGrad)" stroke-width="2" opacity="0.8"/>
+            <ellipse cx="150" cy="105" rx="105" ry="55" fill="none" stroke="url(#orbGrad)" stroke-width="2" opacity="0.55" transform="rotate(60 150 105)"/>
+            <ellipse cx="150" cy="105" rx="105" ry="55" fill="none" stroke="url(#orbGrad)" stroke-width="2" opacity="0.55" transform="rotate(-60 150 105)"/>
+
+            <circle cx="150" cy="105" r="26" fill="url(#nucGrad)" opacity="0.95"/>
+            <circle cx="150" cy="105" r="28" fill="none" stroke="rgba(255,255,255,0.20)" stroke-width="2"/>
+
+            <text x="150" y="113" text-anchor="middle" font-family="ui-monospace, Menlo, monospace"
+                  font-size="22" font-weight="900" fill="rgba(230,237,243,0.92)" id="atomSymbolText">O</text>
+          </svg>
+        </div>
+
+        <div class="stats">
+          <div class="stat"><div class="k">Score</div><div class="v" id="score">0</div></div>
+          <div class="stat"><div class="k">Combo</div><div class="v" id="combo">x0</div></div>
+          <div class="stat"><div class="k">Lives</div><div class="v" id="lives">❤❤❤</div></div>
+          <div class="stat"><div class="k">High Score</div><div class="v" id="highScore">0</div></div>
+        </div>
+
+        <div class="controls" style="margin-top:12px">
+          <button class="btn primary" id="btnStart">▶ Start</button>
+          <button class="btn" id="btnPause">⏸ Pause</button>
+          <button class="btn" id="btnSound">🔊 Sound: On</button>
+          <button class="btn danger" id="btnReset">↺ Reset</button>
+        </div>
+
+        <div class="msg" id="msgBox" style="margin-top:12px">
+          Rule: Only missing the correct symbol costs a life.
+        </div>
+        <div class="small">
+          Controls: <span class="kbd">Click</span> • <span class="kbd">P</span> pause • <span class="kbd">R</span> reset
+        </div>
+      </div>
+    </aside>
+
+    <main class="arena">
+      <div class="topHud">
+        <div class="hudLeft">
+          <div class="hudItem" id="hudTarget">Target: O</div>
+          <div class="hudItem" id="hudSpeed">Speed: 1.0x</div>
+          <div class="hudItem" id="hudSpawn">Spawn: 1.20s</div>
+        </div>
+        <div class="hudRight">
+          <div class="hudItem" id="hudAcc">Accuracy: 0%</div>
+        </div>
+      </div>
+
+      <canvas id="c"></canvas>
+
+      <div class="overlay show" id="overlay">
+        <div class="modal">
+          <h2>Correct-Only Mode</h2>
+          <p>
+            You only get punished if the <strong>correct symbol</strong> reaches the floor.
+            Wrong symbols can fall all day—ignore them.
+          </p>
+          <div class="miniRow">
+            <span class="kbd">Click</span>
+            <span class="kbd">P</span> Pause
+            <span class="kbd">R</span> Reset
+          </div>
+          <button class="btn good" id="btnPlayNow">⚡ Play Now</button>
+          <div class="small">Pro tip: don’t click random circles. Only click the correct one.</div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- JS separated so GitHub shows JavaScript -->
+  <script src="game.js"></script>
+</body>
+</html>
